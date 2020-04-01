@@ -1,26 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useState, ChangeEvent } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {PaginatedPosts} from './components/paginatedPosts';
 
-function App() {
+const App = () =>{
+
+  const [postsPerPage, setPostsPerPage] = useState(10);
+
+  const handleChange = (e:ChangeEvent<HTMLSelectElement>) =>{
+    const val = e.target.value;
+    setPostsPerPage(parseInt(val));
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <React.Fragment>
+      <div className="container fluid">
+        <div className="d-flex">
+          <div className="mr-auto p-2">
+            <h2>React Pagination</h2>
+          </div>
+            <div className="p-2">
+              <h6>Posts per page</h6>
+            </div>
+
+          <div className="p-2">
+            <select className="custom-select sm" value={postsPerPage} onChange={handleChange}>
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="20">20</option>
+            </select>
+          </div>
+        </div>
+
+        <PaginatedPosts noOfPostsPerPage={postsPerPage} />
+      </div>
+    </React.Fragment>
   );
 }
+
+
+
 
 export default App;
